@@ -1,0 +1,25 @@
+Go back to the portrait of Ed if you are still in your Santa form. You can click the portrait from the lobby side to return to your normal form. 
+
+Fire up BurpSuite and go to the proxy options. In the subsection titled "Intercept Server Responses" click "Intercept responses based on the following rules" and then click "Request - Was Intercepted". Secondly go up to the subsection "Intercept Client Requests" and turn OFF "Does Not match...[regex]..".
+
+What this does is allow us to intercept the javascript app.js which is applying constraints on our browser when its loaded in within the larger challenge html document. 
+
+Turning on our Burp proxy prior to clicking the elevator panel will allow us to slowly click through and catch the app.js raw javascript being brought into our browser. (You may have to clear your cookies/cache first from your browser). We can pause and edit the file at this point and it will be used when we go to access floor 3 in our non-santa form. 
+
+When the app.js comes down, be sure to navigate to line 371:
+
+```js
+if (btn4.classList.contains('powered') && hasToken('besanta')) {
+```
+
+This is the line responsible for verifying that you have the besanta token applied to your profile at the time of clicking the fingerprint scanner button.
+
+We are going to remove the check in order to bypass the finger print scanner besanta requirement. 
+
+```js
+if (btn4.classList.contains('powered')) {
+```
+
+Forward the rest of the request through to their ultimate destination of your browser, and then go to YOUR ultimate destination FLOOR 3! I have attached an mage here to demonstrate how I phreaked the elevator to get it to light up all 3 fuze boxes if you have still not done that at this point.
+
+

@@ -1,0 +1,20 @@
+1) T1105 is the technique; T1105.whatever is the sub-technique. So only count the unique occurances of TXXXX and then add the "attack" index to arrive at 13.
+2) t1059.003-main t1059.003-win (tstats count where index=* by index), grep for t1059
+3) looking up MITRE Enterprise Techniques on google, going to the main Techniques page for Mitre shows that System Information Discovery is T1082, consistent with one of the techniques listed in tstats count where index=* by index. https://attack.mitre.org/techniques/T1082/. Therefore we can search for "MachineGuid" with: index=t1082-* "MachineGuid" => HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Cryptography
+4) index=* "OSTAP" | sort -_time | reverse => first occuring log item shows: 2020-11-30T17:44:15Z
+5) looking through the frgnca github account the "AudioDeviceCmdlets" repository has a lot of forks/stars so I went to the atomic-red-team github demonstrated in the lecture video and searched for "audio" which revealed a module T1123 which handles audio capturing. The attac command which is run is powershell.exe -Command WindowsAudioDevice-Powershell-Cmdlet - so that is what I put into my search query.
+index=* "powershell.exe -Command WindowsAudioDevice-Powershell-Cmdlet" EventID=1 
+|  sort -_time 
+|  reverse
+=> 3648
+
+6) query: index=* ".bat" shows 9 command line entries, including the target batch file 'Discovery.bat'. Looking for this file in the atomic-redteam github @ https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1074.001/src/Discovery.bat allows us to retrieve the last command of the enumeration script 'quser'.
+7) index=* sourcetype="bro:x509:json" "certificate.issuer"="CN=win-dc-748.attackrange.local" (self-signed certificate from the domain controller is HIGHLY suspect) => 55FCEEBB21270D9249E86F4B9DC7AA60
+
+FINAL) `echo "7FXjP1lyfKbyDK/MChyf36h7" | base64 -d | xxd -p` => place to https://cryptii.com/pipes/rc4-encryption as the ciphertext. 
+
+`printf "Stay Frosty" | xxd -p -u` => place into the site as the decryption key!
+
+  
+    
+

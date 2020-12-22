@@ -1,0 +1,29 @@
+1) task.submit('start')
+2) task.submit(send)
+3) task.submit(sniff)
+4) task.submit(1)
+5) task.submit(rdpcap)
+6) task.submit(2)
+7) task.submit(UDP_PACKETS[0])
+8) task.submit(TCP_PACKETS[1].getlayer(TCP))
+9) UDP_PACKETS[0].src = "127.0.0.1" \
+   task.submit(UDP_PACKETS[0])
+10) TCP_PACKETS.show()
+    for packet in TCP_PACKETS[3:]:
+	print(packet[Raw].load)
+
+    task.submit('echo')
+	
+    or as the game provides us: [pkt[Raw].load for pkt in TCP_PACKETS if Raw in pkt]
+11) task.submit(ICMP_PACKETS[1][ICMP].chksum)
+12) task.submit(3)
+13) 	pkt = Ether()/IP(dst='127.127.127.127')/UDP(dport=5000)
+	task.submit(pkt)
+14) dns_query = IP(dst="127.2.3.4")/UDP(dport=53)/DNS(rd=1,qd=DNSQR(qname="elveslove.santa"))
+    task.submit(dns_query)
+15) 	ARP_PACKETS[1].show()
+	ARP_PACKETS[1].getlayer(ARP).op=2
+	ARP_PACKETS[1].getlayer(ARP).hwdst="00:16:ce:6e:8b:24"
+	ARP_PACKETS[1].getlayer(ARP).hwsrc="00:13:46:0b:22:ba"
+	task.submit(ARP_PACKETS)
+

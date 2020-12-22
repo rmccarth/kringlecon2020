@@ -1,0 +1,22 @@
+var instructions = [elf.moveDown, elf.moveLeft, elf.moveUp, elf.moveRight, elf.moveDown, elf.moveLeft, elf.moveUp, elf.moveRight]
+for (i = 0; i < 8; i++) {
+  instructions[i](i + 1);
+  elf.get_lever(i)
+  elf.pull_lever(i)
+}
+elf.moveUp(2)
+elf.moveLeft(4)
+var sum = 0
+
+function parser(challenge) {
+  for (j = 0; j < challenge.length; j++) {
+    for (k = 0; k < challenge[j].length; k++) {
+      if (!isNaN(challenge[j][k])) {
+        sum = sum + challenge[j][k];
+      }
+    }
+  }
+  return sum
+}
+elf.tell_munch(parser)
+elf.moveUp(3)

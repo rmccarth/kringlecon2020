@@ -1,0 +1,39 @@
+function pull(lever_num, sum) {
+  lever_value = elf.get_lever(lever_num)
+  elf.pull_lever(sum + lever_value)
+  sum = sum + lever_value
+  return sum
+}
+
+function moveRight(lever_num, sum) {
+  elf.moveRight(1 + (lever_num * 2))
+  sum = pull(lever_num, sum)
+  elf.moveUp(2)
+  return sum
+}
+
+function moveLeft(lever_num, sum) {
+  elf.moveLeft(1 + (lever_num * 2))
+  sum = pull(lever_num, sum)
+  elf.moveUp(2)
+  return sum
+}
+var sum = 0
+for (lever_num = 0; lever_num < 6; lever_num++) {
+  if (lever_num % 2 == 0) {
+    sum = moveRight(lever_num, sum)
+  } else {
+    sum = moveLeft(lever_num, sum)
+  }
+}
+
+function parse(challenge) {
+  for (i = 0; i < challenge.length; i++) {
+    if (Object.keys(challenge[i]).find(key => challenge[i][key] === "lollipop")) {
+      break;
+    }
+  }
+  return Object.keys(challenge[i]).find(key => challenge[i][key] === "lollipop")
+}
+elf.tell_munch(parse)
+elf.moveRight(50)

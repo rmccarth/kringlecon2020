@@ -1,0 +1,60 @@
+upload an 'invalid type image'
+> Error in /app/lib/app.rb: Unsupported file type: /tmp/RackMultipart20201217-1-7n1gff.lock
+
+Indicates that there is a file called /app/lib/app.rb, we just need a way to read it now.
+
+Throwing our traffic into burpsuite (we had to add the portswigger CA certificate to our browser first to get around the HSTS site protection) we see that when uploading a valid image into the tag generator it makes a request to the backend to retrieve the image that has been uplaoded before placing it into the tag.
+
+```
+GET /image?id=e1541ed8-219e-44b0-9e18-9060974af1e4.jpg HTTP/1.1
+
+Host: tag-generator.kringlecastle.com
+
+```
+
+Altering the request a bit allows us to use a straightforward LFI directory traversal:
+
+```
+GET /image?id=../../../../../../../../app/lib/app.rb HTTP/1.1
+
+Host: tag-generator.kringlecastle.com
+```
+
+This reveals the contents of app.rb (app.rb in the local directory)
+
+
+We can see that Jack Frost has made a number of nefarious "comments" out of otherwise decent code! His edits bypass the filename restrictions on uploads (only the basename though) and lo-and-behold the filename gets passed directly to a ruby system call on line 78!
+
+```ruby
+if !system("convert -resize 800x600\\> -quality 75 '#{ filename }' '#{ out_path }'")
+```
+
+This is super vulnerable as now its just a matter of finding the right escape sequence to execute commands as the user running the web application!
+
+This piece took me some time since I originally stumbled upon command execution using things like:
+filename="\''$(pwd)'\'"
+
+Note the single quotes occuring twice in the sequence, one is escaped to pass into the ruby interpreter, and the other is carried through to serve as the quotes for the system() execution environment. Howevercan you image trying to create a filename on the local filesystem with that name? Yeah its really difficult (the gui doesn't even let you really do it as the string gets interpolated/mangle-jangled). 
+
+ANYWAYS, this article shows an easier way to do the command injection technique, so I followed its example: http://gavinmiller.io/2015/fixing-command-injection-vulnerabilities/
+
+Essentially the exploit comes down to a phrase like this:
+```ruby
+filename="'; echo $GREETZ > out.txt;'
+```
+
+The last thing in order to pass the filename check is to add .jpg or .jpeg or .png to the end of the file we've created.
+
+Ultimately our file looks like this:
+
+```bash
+'; echo $GREETZ > out.txt;'
+```
+
+Uploading this into the tag generator and then using our same LFI vulnerability that we discovered earlier, allows us to read our out.txt @ GET /image?id=out.txt, and examine the contents of the GREETZ environment variable :) 
+
+```
+JackFrostWasHere
+```
+
+

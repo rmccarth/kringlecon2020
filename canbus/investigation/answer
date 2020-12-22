@@ -1,0 +1,19 @@
+# 3rd column, look for unique values, 19B looks anomalous
+
+cat candump.log | awk '{print $3}' |sort -u
+
+add: | grep 19B
+=>
+	19B#000000000000
+	19B#00000F000000
+	244#000000019B
+	244#00000019BE
+
+
+# 19B#0's occurs twice! so our answer is likely 19B#00000F000000's decimal value!:
+
+cat candump.log |grep F000000
+=>
+	(1608926671.122520) vcan0 19B#00000F000000
+
+echo "122520" | ./runtoanswer
