@@ -18,7 +18,7 @@ from naughty_nice import Block, Chain
 1) Assumes local blockchain.dat, official_public.pem,  naughty_nice.py files
 2) The kringlecon grand challenge part 1 requires predicting a nonce *4* blocks in the future. 
 
-Callee: Call this function with a n value representing the number of nonces in the future that you would like back.
+Callee: Call this function with an n value representing the number of nonces in the future that you would like back.
 """
 def predict_nonce(nonceList: list, num_nonces: int, nonce_length: int):
     # this will hold predicted nonces

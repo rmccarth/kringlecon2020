@@ -1,0 +1,331 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Naughty/Nice List with Blockchain Investigation Part 2 (11b) &mdash; Kringlecon 3 Turtle Doves (2020) v1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Naughty/Nice List with Blockchain Investigation Part 1 (11a)" href="part1.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> Kringlecon 3 Turtle Doves (2020)
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../author.html">$ whoami</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../event.html">About Kringlecon and Holiday Hack</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Challenge Walkthroughs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../battlefort.html">Battlefort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part1.html">Naughty/Nice List with Blockchain Investigation Part 1 (11a)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Naughty/Nice List with Blockchain Investigation Part 2 (11b)</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Kringlecon 3 Turtle Doves (2020)</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Challenge Walkthroughs</a> &raquo;</li>
+        
+      <li>Naughty/Nice List with Blockchain Investigation Part 2 (11b)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/tutorial/blockchain/part2.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="naughty-nice-list-with-blockchain-investigation-part-2-11b">
+<span id="part2"></span><h1>Naughty/Nice List with Blockchain Investigation Part 2 (11b)<a class="headerlink" href="#naughty-nice-list-with-blockchain-investigation-part-2-11b" title="Permalink to this headline">¶</a></h1>
+<p><strong>Difficulty:</strong> 5</p>
+<p><strong>Type:</strong>  Main Questline</p>
+<p><strong>Tooltip:</strong></p>
+<blockquote>
+<div><p>“The SHA256 of Jack’s altered block is: 58a3b9335a6ceb0234c12d35a0564c4e f0e90152d0eb2ce2082383b38028a90f. If you’re clever, you can recreate the original version of that block by changing the values of only 4 bytes. Once you’ve recreated the original block, what is the SHA256 of that block?”</p>
+</div></blockquote>
+<div class="topic">
+<p class="topic-title first">Solution and Explanation</p>
+<p>We can identify which block Jack Frost altered by dumping the naughty/nice scores out of the entire blockchain.dat and then sorting by unique values (hoping to see a value pop up that is anomylous).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">chain</span><span class="o">.</span><span class="n">blocks</span><span class="p">)):</span>
+    <span class="c1"># now print the score of each block!</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">chain</span><span class="o">.</span><span class="n">blocks</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">score</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Piping the output of our code into a bash sort (unique):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python3 find_altered_block.py <span class="p">|</span> sort -u
+&gt; we spot <span class="s1">&#39;4294967295&#39;</span> in the output
+</pre></div>
+</div>
+<p>This compels us to write a new script (or alter the first one) to retrieve that block and its attached document contents:</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">naughty_nice</span> <span class="kn">import</span> <span class="n">Block</span><span class="p">,</span> <span class="n">Chain</span>
+<span class="kn">from</span> <span class="nn">Crypto.Hash</span> <span class="kn">import</span> <span class="n">MD5</span><span class="p">,</span> <span class="n">SHA256</span>
+<span class="kn">from</span> <span class="nn">Crypto.PublicKey</span> <span class="kn">import</span> <span class="n">RSA</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;official_public.pem&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+   <span class="n">official_public_key</span> <span class="o">=</span> <span class="n">RSA</span><span class="o">.</span><span class="n">importKey</span><span class="p">(</span><span class="n">fh</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+<span class="n">chain</span> <span class="o">=</span> <span class="n">Chain</span><span class="p">(</span><span class="n">load</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;blockchain.dat&#39;</span><span class="p">)</span>
+<span class="c1"># chain.verify_chain(official_public_key)</span>
+
+<span class="c1"># score identified by running print(chain.blocks[i]) with python3 find_altered_block.py | sort -u</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">chain</span><span class="o">.</span><span class="n">blocks</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="n">chain</span><span class="o">.</span><span class="n">blocks</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">score</span> <span class="o">==</span> <span class="mi">4294967295</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">chain</span><span class="o">.</span><span class="n">blocks</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dumping contents of the block&quot;</span><span class="p">)</span>
+        <span class="n">chain</span><span class="o">.</span><span class="n">blocks</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">dump_doc</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">chain</span><span class="o">.</span><span class="n">blocks</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">dump_doc</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dumping just the binary block itself (block.dat)&quot;</span><span class="p">)</span>
+        <span class="n">chain</span><span class="o">.</span><span class="n">save_a_block</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="topic">
+<p class="topic-title first">Investigating the PDF</p>
+<p>The PDF file was immediately interesting to me so I opened it to find a letter affirming Jack Frosts ultimate niceness - how strange. A game is certainly afoot. So I popped the pdf into <a class="reference external" href="https://github.com/DidierStevens/DidierStevensSuite/">PDF-parser</a>. and stored the output in ‘parser-pdf-output</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ parse-pdf-output contains output of <span class="sb">`</span>python3 ~/Downloads/DidierStevensSuite/pdf-parser.py -f <span class="m">129459</span>.pdf &gt; parse-pdf-output<span class="sb">`</span>
+</pre></div>
+</div>
+<p>I spotted that this PDF has a lot of internal content for a 1 page document. But I wasn’t sure what to make of it. I started reading everything I could about hash collisions from the repositories linked to us by the challenge tooltips and I found the full workshop video associated with the slidedeck that we were given detailing the different forms of hash collisions and how they are implemented (<a class="reference external" href="https://www.youtube.com/watch?v=BcwrMnGVyBI/">Lecture Video</a>.)
+In the collisions git repository that was also linked by an elf-tooltip, I was able to find a subsection of the README.md that detailed how PDF’s can be combined into one large document with enough excess randomness to collide the two files <a class="reference external" href="https://github.com/corkami/collisions#pdf/">PDF Collisions</a>. I realized that if Shinny Upatree was somehow compromised…</p>
+</div>
+<div class="topic">
+<p class="topic-title first">Unicoll MD5 Collisions</p>
+<p>The methodology outlined in the collisions README.md indicated that the trick to displaying either document is to flip the byte associated with the document root.</p>
+<p>An exercise that I found useful in understanding how the bytes get altered in the 2-PDF collision was using vbindiff on the provided examples from the collisions repository.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ vbindiff collision1.pdf collision2.pdf
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../../_images/vbindiff-collision1-v-collision2.png"><img alt="../../_images/vbindiff-collision1-v-collision2.png" src="../../_images/vbindiff-collision1-v-collision2.png" style="width: 400px;" /></a>
+</div>
+<p><span class="raw-html"><br /></span></p>
+<div class="topic">
+<p class="topic-title first">Hex Editing the block.bin</p>
+<p>I began to play with the bytes in the PDF file and sure enough when I incremented the root byte “/Pages 2” =&gt; “/Pages 3”, I noticed the content of the PDF document completely change!!</p>
+<p>However,the MD5 was altered! That meant I was missing something because if we want to maintain the md5 collision that is likely necessary to alter a block in the blockchain, the MD5 needs to remain unchanged.</p>
+<p>At exactly 54:50 I clued into how the prefix structuring and collision blocks end up working together during the Unicoll collision. Essentially what happens is that we can specify an arbitrarily large beginning of the document to hold as our “prefix” (as long as it is divisible by 4), and then the next segment becomes the “collision block” which essentially serves as our random space to guess hex values until the md5sum matches the original document. The nice thing about this Unicoll collision is that the nibble that gets incremented/decrimented exactly mirrors the byte 10 bytes from the end of the prefix.</p>
+<p>It took some thinking but I eventually realized that the PDF portion of the collisions README.md also mentioned that this attack was performed using the Unicoll collison.
+Drawing on what I had learned from the workshop lecture video, I was able to suppose that maybe we have to decriment a different byte to maintain the hash collision. After playing with my hexcurse hexeditor for a bit to get the length of a line to be exactly 16 bytes, I was able to find where I needed to alter a byte to maintain the collision.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ hexcurse -r <span class="m">16</span> block.dat
+</pre></div>
+</div>
+<p>Editing the hex to flip the byte for /Pages <strong>2</strong> to /Pages <strong>3</strong> (0x32 =&gt; 0x33) and saving as a new document allows us to view the other document thats included within the PDF! And its contents are quite revealing to as Jack Frost’s methodology!</p>
+<p>Reading into the newly revealed PDF content, Jack Frost got Shinny Upatree to leave the submission candidate PDF unattended and went and created a collision at that point which would provide Jack a post-hoc means to flip two bytes within the PDF data field of the blockchain block. This would ultimately change the root pointed to within the PDF (and keep the same hash!), revealing the previously hidden, supporting evidence of his “niceness”.**</p>
+<p>That leaves us with an understanding of how Jack Frost altered the PDF to get Shinny Upatree to sign-off. But how did he get his naughty/nice score so high as well?</p>
+</div>
+<div class="topic">
+<p class="topic-title first">Closing out the Challenge</p>
+<p>Jack used the same Unicoll technique on the byte that dictates the <strong>sign</strong> of the naughty/niceness score. Jack took the beginning section of the block, using his pre-computed nonce from <a class="reference internal" href="part1.html#part1"><span class="std std-ref">Naughty/Nice List with Blockchain Investigation Part 1 (11a)</span></a>, and set the prefix to contain the naughty/nice sign byte to be exactly 10 bytes before the end of the prefix.
+Jack was then able to run the Unicoll collision on the block which altered a value within the “Binary Blob” field, mirroring the byte that was altered in the prefix, and maintaining yet again the MD5 of the block. As the Binary Blob data section served as the ‘collision block’, the rest of the Blockchain Block could be appended with the content
+that we see in the PDF section of the block. As the content in the PDF section is also a hash collision with its doppleganger sibling PDF, whichever bytes are altered will yet again maintain the MD5. Finally, the block could be appended with the signature and signing section, which would remain unchanged regardless of which bytes were being altered above in the block.</p>
+<p>In summary, Jack Frost increments the Naughty/Nice byte (49th), and then decriments the 89th byte to maintain the hash collision. So to reverse this we decriment the 59th bit 1 =&gt; 0 and then increment the 89th byte D6 =&gt; D7.
+For the PDF since we found out we can increment the byte at the 109th byte in block.dat to reveal the original PDF that Shinny thought he was signing off on, we can conversely decriment the byte at the 149th location to maintain the hash collision.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ vbindiff block.dat final-block.dat
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../../_images/vbindiff-init-v-final.png"><img alt="../../_images/vbindiff-init-v-final.png" src="../../_images/vbindiff-init-v-final.png" style="width: 400px;" /></a>
+<p>This ultimately gives us:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sha256sum block.dat
+ &gt; fff054f33c2134e0230efb29dad515064ac97aa8c68d33c58c01213a0d408afb
+</pre></div>
+</div>
+<p>And that solves the grand challenge for Kringlecon 3 Turtle Doves 2020!!</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="part1.html" class="btn btn-neutral float-left" title="Naughty/Nice List with Blockchain Investigation Part 1 (11a)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Rob McCarthy
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

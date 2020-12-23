@@ -1,0 +1,20 @@
+.. _Blockchain:
+
+Blockchain
+^^^^^^^^^^
+
+.. topic:: Challenge Details
+
+    Difficulty: 5
+
+    Even though the chunk of the blockchain that you have ends with block 129996, can you predict the nonce for block 130000? Talk to Tangle Coalbox in the Speaker UNpreparedness Room for tips on prediction and Tinsel Upatree for more tips and tools. (Enter just the 16-character hex value of the nonce)
+
+.. topic:: Part 1 Solution Script and Explanation
+
+    The nonce that is attached to each block in the naughty-or-nice blockchain is cryptographically insecure as the randbits(64) that are generated result from random.randrange(0xFFFFFFFFFFFFFFFF) which seeds from a mersenne twister.
+
+    The sourecode attached is commented and will provide even more clarity.
+
+    .. literalinclude:: ../../blockchain/predict_nonce.py
+        :language: python
+        :linenos:
